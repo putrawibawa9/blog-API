@@ -1,0 +1,96 @@
+openapi: "3.0.3"
+info:
+  title: Blog API
+  version: "1.0"
+servers:
+  - url: localhost:8000/api
+    description: Local server
+paths:
+  /blogs:
+    get:
+      summary: Get all blogs
+      responses:
+        "200":
+          description: Blogs List
+
+    post:
+      summary: Create a new blog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                desc:
+                  type: string
+                author:
+                  type: string
+                date:
+                  type: string
+      responses:
+        "201":
+          description: Blog created successfully
+        "400":
+          description: Bad request
+
+  /blogs/{id}:
+    get:
+      summary: Get a blog by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the blog
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Blog found
+        "404":
+          description: Blog not found
+
+    post:
+      summary: Update a blog by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the blog
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                desc:
+                  type: string
+      responses:
+        "200":
+          description: Blog updated successfully
+        "404":
+          description: Blog not found
+        "400":
+          description: Bad request
+
+    delete:
+      responses:
+        "200":
+          description: Blog deleted successfully
+        "404":
+          description: Blog not found
+    summary: Delete a blog by ID
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the blog
+        schema:
+          type: integer
